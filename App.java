@@ -1,0 +1,139 @@
+import java.util.Map;
+import java.io.Console;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Scanner;
+import org.w3c.dom.events.MouseEvent;
+public class App {
+    public static void main(String[] args) throws Exception {
+        //Ammo ammoT = Ammo.GenerateAmmo(Rarity.Legendary, AmmoType.AP, 120, true);
+       // ammoT.DisplayInfo(false);
+        
+        //int i= 0;
+       // Module moduleT = Module.GenerateModule(Rarity.Epic, ModuleType.Turret, true,30);
+        
+        //moduleT.DisplayInfo(false);
+        Core core = new Core();
+        core.HomeworkMenu();
+        //core.Initialize();
+    }
+}
+
+class Core {
+    Vehicle playerVehicle;
+    List<Module> modules;
+    public void Initialize() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Name your vehicle:");
+        String name = scanner.nextLine();
+        System.out.println("Choose your caliber(30/57,105,120):");
+        int caliber = scanner.nextInt() ;
+        Module turrent = Module.GenerateModule(Rarity.Normal, ModuleType.Turret, false,caliber);
+        
+        scanner.close();
+    }
+    public void HomeworkMenu(){
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+             
+        System.out.println("0 for module management \n2 for exit");
+        int res = scanner.nextInt() ;
+        switch (res) {
+            case 0:
+                ModuleManage();
+                    
+                
+                break;
+            case 2:
+                return;
+            default:
+                break;
+        }
+        }
+       
+    }
+    public Core(){
+        modules = new ArrayList<>();
+    }
+    public void ModuleManage(){
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            if(modules.size()==0){
+                System.out.println("No Module here,press 1 to get one");
+            }
+            for(int i =0;i<modules.size();i++){
+                System.out.print(i);
+                modules.get(i).DisplayInfo(false);
+            }
+            System.out.println("press 1 to get a module \npress 2 to remove a moudle \npress 3 to exit");
+            int res = scanner.nextInt() ;
+            switch (res) {
+                case 1:
+                    ProcessAddModule();
+                    
+                
+                    break;
+                case 2:
+                    DeleteModule();
+                    break;
+                case 3:
+                    
+                    return;
+                    
+            default:
+                continue;
+                
+            }
+        }
+        
+    }
+    public void ProcessAddModule(){
+        ModuleType[] types = {ModuleType.Reloader,ModuleType.Scout,ModuleType.APS,ModuleType.Turret,ModuleType.ExtraArmor,ModuleType.SideTurret};
+        Rarity[] rarities = {Rarity.Normal,Rarity.Rare,Rarity.SuperRare,Rarity.Epic,Rarity.Legendary};
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("0/1/2/3/4//5/6 for Random/Reloader/Scout/APS/Turret/ExtraArmor/SideTurrent");
+        int res1 = scanner.nextInt() ;
+        Random rand = new Random();
+        if(res1==0) res1 = rand.nextInt(5)+1;
+        System.out.println("0/1/2/3/4//5/ for Random/Normal/Rare/SuperRare/Epic/Legendary");
+        int res2 = scanner.nextInt() ;
+        if(res2==0) res2 = rand.nextInt(4)+1;
+        Module module = Module.GenerateModule(rarities[res2-1], types[res1-1], true, 120);
+        
+        if(module==null) {
+            System.out.println("Failed");
+            return;
+        }
+        System.out.println("Succeed");
+        module.DisplayInfo(false);
+        modules.add(module);
+
+    }
+    public void DeleteModule(){
+        if(modules.size()==0) return;
+        System.out.println("Enter the index of the module you want to delete,-1 for random delete");
+        Scanner scanner = new Scanner(System.in);
+        int res1 = scanner.nextInt() ;
+        Random rand = new Random();
+        if(res1==-1) res1 = rand.nextInt(modules.size())-1;
+        modules.remove(res1);
+        
+    }
+}
+class Controller{
+    Vehicle vehicle;
+    public boolean isPlayer;
+    void Decide(Controller enemy){
+        if(enemy==null) return;
+        if(isPlayer){
+            System.out.println("Choose your decision:");
+            String res = scanner.nextLine() ;
+        }
+    }
+}
