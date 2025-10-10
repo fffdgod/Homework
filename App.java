@@ -71,27 +71,32 @@ class Core {
                 System.out.print(i);
                 modules.get(i).DisplayInfo(false);
             }
-            System.out.println("press 1 to get a module \npress 2 to remove a moudle \npress 3 to exit");
+            ModuleType[] types = {ModuleType.Reloader,ModuleType.Scout,ModuleType.APS,ModuleType.Turret,ModuleType.ExtraArmor,ModuleType.SideTurret};
+            System.out.println("press 1 to get a module \npress 2 to remove a moudle \npress 3X tp filter the modules according to module type X=1/2/3/4//5/6 for Reloader/Scout/APS/Turret/ExtraArmor/SideTurret\npress 4 to exit");
             int res = scanner.nextInt() ;
-            switch (res) {
-                case 1:
-                    ProcessAddModule();
-                    
-                
-                    break;
-                case 2:
-                    DeleteModule();
-                    break;
-                case 3:
-                    
-                    return;
-                    
-            default:
-                continue;
-                
+            if(res==1){
+                ProcessAddModule();
+            }
+            if(res==2){
+                DeleteModule();
+            }
+            if((int)res/10==3){
+                FilterList(types[res%10-1]);
+            }
+            if(res==4){
+                return;
             }
         }
         
+    }
+    public void FilterList(ModuleType type){
+        
+        for(int i =0;i<modules.size();i++){
+                if(type!=modules.get(i).type) continue;
+                System.out.print(i);
+                modules.get(i).DisplayInfo(false);
+            }
+            System.out.println("Filter Complete");
     }
     public void ProcessAddModule(){
         ModuleType[] types = {ModuleType.Reloader,ModuleType.Scout,ModuleType.APS,ModuleType.Turret,ModuleType.ExtraArmor,ModuleType.SideTurret};
