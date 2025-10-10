@@ -204,6 +204,7 @@ class Module {
                 name = "Reloader";
                 value =DefaultReloader.value;
                 hp = DefaultReloader.hp;
+                
                 antiScout = DefaultReloader.antiScout;
                 break;
             default:
