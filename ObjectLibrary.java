@@ -88,22 +88,70 @@ public class Vehicle {
 }
 class Module {
     public String name;
-    public Rarity rarity;
-    public ModuleType type;
-    public float hp;
-    public float value; // 对炮塔 口径 对装弹机 装弹时间减幅 对APS 次数 对观瞄 侦察能力 对副炮塔 装弹时间减幅
-    public float antiScout;
-    public String color;
-    public String pre;
+    private Rarity rarity;
+    private ModuleType type;
+    private float hp;
+    private float value;
+    private float antiScout;
+    private String color;
+    private String pre;
     
+    // Getter and Setter methods
+    public Rarity getRarity(){
+        return rarity;
+    }
+    public void setRarity(Rarity rarity){
+        this.rarity = rarity;
+    }
+    
+    public ModuleType getType() {
+        return type;
+    }
+    public void setType(ModuleType type) {
+        this.type = type;
+    }
+    
+    public float getHp() {
+        return hp;
+    }
+    public void setHp(float hp) {
+        this.hp = hp;
+    }
+    
+    public float getValue() {
+        return value;
+    }
+    public void setValue(float value) {
+        this.value = value;
+    }
+    
+    public float getAntiScout() {
+        return antiScout;
+    }
+    public void setAntiScout(float antiScout) {
+        this.antiScout = antiScout;
+    }
+    
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    
+    public String getPre() {
+        return pre;
+    }
+    public void setPre(String pre) {
+        this.pre = pre;
+    }
     
     public void DisplayInfo(boolean nameOnly) {
         
         String ability = "";
-        switch (type) {
+        switch (getType()) {  
             case Turret:
                 ability = "Caliber";
-                
                 break;
             case Scout:
                 ability = "Scout Ability";
@@ -122,12 +170,11 @@ class Module {
                 break;
             default:
                 name = "None";
-                
                 break;
         }
-        System.out.format("\u001B[" + color + pre +" "+name + "\u001B[0m");
+        System.out.format("\u001B[" + getColor() + getPre() +" "+name + "\u001B[0m");  
         if (!nameOnly) {
-            System.out.println(" - Hp: " + hp + ", "+ability + value + ", AntiScount: " +antiScout);
+            System.out.println(" - Hp: " + getHp() + ", "+ability + getValue() + ", AntiScout: " + getAntiScout());  
         }
     }
     public Module(String name,float hp,ModuleType type,float value,float antiScout,Rarity rarity) {
@@ -138,7 +185,7 @@ class Module {
         this.antiScout=antiScout;
         switch (rarity) {
             case Normal:
-                color = "";
+                color = "0m"; 
                 pre = "Normal";
                 break;
             case Rare:
@@ -278,7 +325,7 @@ public class Ammo {
         
         switch (rarity) {
             case Normal:
-                color = "";
+                color = "0m";
                 pre = "Normal";
                 break;
             case Rare:
@@ -305,7 +352,7 @@ public class Ammo {
     
     
     public void DisplayInfo(boolean nameOnly) {
-        System.out.format("\u001B[" + color + pre +" "+name + "\u001B[0m");
+        System.out.format("\u001B[" + color + " " + pre +" "+name + "\u001B[0m");
         if (!nameOnly) {
             System.out.println(" - Caliber: " + caliber + ", PD: " + pd + ", ED: " + ed + ", Damage: " + damage);
         }

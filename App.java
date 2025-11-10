@@ -34,7 +34,7 @@ class Core {
         String name = scanner.nextLine();
         System.out.println("Choose your caliber(30/57,105,120):");
         int caliber = scanner.nextInt() ;
-        Module turrent = Module.GenerateModule(Rarity.Normal, ModuleType.Turret, false,caliber);
+        Module turret = Module.GenerateModule(Rarity.Normal, ModuleType.Turret, false,caliber);
         
         scanner.close();
     }
@@ -52,7 +52,7 @@ class Core {
         Scanner scanner = new Scanner(System.in);
         while (true) {
              
-        System.out.println("0 for module management \n2 for exit");
+        System.out.println("0) Module management \n2) Exit");
         int res = scanner.nextInt() ;
         switch (res) {
             case 0:
@@ -61,6 +61,8 @@ class Core {
                 
                 break;
             case 2:
+                scanner.close();
+                
                 return;
             default:
                 break;
@@ -75,14 +77,15 @@ class Core {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             if(modules.size()==0){
-                System.out.println("No Module here,press 1 to get one");
+                System.out.println("No Module here.");
             }
             for(int i =0;i<modules.size();i++){
                 System.out.print(i);
+                System.out.print(" ");
                 modules.get(i).DisplayInfo(false);
             }
             ModuleType[] types = {ModuleType.Reloader,ModuleType.Scout,ModuleType.APS,ModuleType.Turret,ModuleType.ExtraArmor,ModuleType.SideTurret};
-            System.out.println("press 1 to get a module \npress 2 to remove a moudle \npress 3X tp filter the modules according to module type X=1/2/3/4//5/6 for Reloader/Scout/APS/Turret/ExtraArmor/SideTurret\npress 4 to exit");
+            System.out.println("1) Get a module \n2) Remove a module \n3X) List the modules according to module type X=1/2/3/4//5/6 for Reloader/Scout/APS/Turret/ExtraArmor/SideTurret\n4) to exit");
             int res = scanner.nextInt() ;
             if(res==1){
                 ProcessAddModule();
@@ -99,24 +102,25 @@ class Core {
         }
         
     }
-    public void FilterList(ModuleType type){
-        
-        for(int i =0;i<modules.size();i++){
-                if(type!=modules.get(i).type) continue;
-                System.out.print(i);
-                modules.get(i).DisplayInfo(false);
-            }
-            System.out.println("Filter Complete");
-    }
+    // App.java - 修改了FilterList方法中使用type的地方
+public void FilterList(ModuleType type){
+    
+    for(int i =0;i<modules.size();i++){
+            if(type!=modules.get(i).getType()) continue;  // 改为使用getter
+            System.out.print(i);
+            modules.get(i).DisplayInfo(false);
+        }
+        System.out.println("----------------Filter Complete-------------------");
+}
     public void ProcessAddModule(){
         ModuleType[] types = {ModuleType.Reloader,ModuleType.Scout,ModuleType.APS,ModuleType.Turret,ModuleType.ExtraArmor,ModuleType.SideTurret};
         Rarity[] rarities = {Rarity.Normal,Rarity.Rare,Rarity.SuperRare,Rarity.Epic,Rarity.Legendary};
         Scanner scanner = new Scanner(System.in);
-        System.out.println("0/1/2/3/4//5/6 for Random/Reloader/Scout/APS/Turret/ExtraArmor/SideTurrent");
+        System.out.println("0/1/2/3/4//5/6 for Random/Reloader/Scout/APS/Turret/ExtraArmor/SideTurret:");
         int res1 = scanner.nextInt() ;
         Random rand = new Random();
         if(res1==0) res1 = rand.nextInt(5)+1;
-        System.out.println("0/1/2/3/4//5/ for Random/Normal/Rare/SuperRare/Epic/Legendary");
+        System.out.println("0/1/2/3/4//5/ for Random/Normal/Rare/SuperRare/Epic/Legendary:");
         int res2 = scanner.nextInt() ;
         if(res2==0) res2 = rand.nextInt(4)+1;
         Module module = Module.GenerateModule(rarities[res2-1], types[res1-1], true, 120);
